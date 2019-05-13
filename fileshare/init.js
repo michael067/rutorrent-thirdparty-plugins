@@ -1,9 +1,8 @@
-
 plugin.loadMainCSS();
 
+injectScript(plugin.path+"clip-j.js");
 
 plugin.attachPageToTabs($('<div>').attr("id","FileShare").addClass('table_tab').get(0), 'File Share');
-
 
 theWebUI.FS = {
 
@@ -59,7 +58,7 @@ theWebUI.FS = {
 	},
 
 	del: function () {
-		
+
 		var sr = theWebUI.getTable("fsh").rowSel;
 		var list = {};
 
@@ -75,7 +74,7 @@ theWebUI.FS = {
 
 	islimited: function (max, cur) {return (max > 0) ? ((cur <= max) ? false : true) : false;},
 
-	show: function (what, how) { 
+	show: function (what, how) {
 
 		var file;
 		var password;
@@ -126,7 +125,6 @@ theWebUI.FS = {
 		if(table) {table.resize(w,h);}
 	},
 
-
 	rename: function() {
 		var table = theWebUI.getTable("fsh");
 		if(table.created && plugin.allStuffLoaded) {
@@ -140,13 +138,12 @@ theWebUI.FS = {
 
 	},
 
-	tableadd: function(data) { 
+	tableadd: function(data) {
 
 		var table = theWebUI.getTable("fsh");
 		table.clearRows();
 
 		$.each(data.list, function(ndx,item) {
-   			 
 				table.addRowById({
 					name: item.file,
 					size: item.size,
@@ -155,7 +152,7 @@ theWebUI.FS = {
 					link: theWebUI.FS.downlink+'?uh='+encodeURIComponent(data.uh)+'&s='+ndx
 				}, "_fsh_"+ndx, 'Icon_File');
 		});
-		
+
 		table.refreshRows();
 	},
 
@@ -166,8 +163,8 @@ theWebUI.FS = {
 			columns:
 			[
 				{ text: '',			width: "210px", id: "name",		type: TYPE_STRING },
-				{ text: theUILang.Size,			width: "60px",	id: "size",		type: TYPE_NUMBER },
-				{ text: '', 			width: "120px", 	id: "time",		type: TYPE_STRING, 	"align" : ALIGN_CENTER},
+				{ text: theUILang.Size,		width: "60px",	id: "size",		type: TYPE_NUMBER },
+				{ text: '', 			width: "120px",	id: "time",		type: TYPE_STRING,	"align" : ALIGN_CENTER},
 				{ text: '',			width: "80px", 	id: "pass",		type: TYPE_STRING },
 				{ text: '',			width: "310px",	id: "link",		type: TYPE_STRING }
 			],
@@ -179,7 +176,6 @@ theWebUI.FS = {
 
 	},
 
-
 	tableformat: function(table,arr) {
 		for(var i in arr)
 		{
@@ -187,7 +183,7 @@ theWebUI.FS = {
 				arr[i] = '';
 			else
    			switch(table.getIdByCol(i)) {
-      				case 'size' : 
+      				case 'size' :
       					arr[i] = theConverter.bytes(arr[i], 2);
       					break;
 				case 'time':
@@ -207,31 +203,18 @@ theWebUI.FS = {
 			var table = theWebUI.getTable("fsh");
 			var target = id.split('_fsh_')[1];
 
-			if(table.selCount == 1) {
-				var link = theWebUI.getTable("fsh").getValueById('_fsh_'+target, 'link');
-				ZeroClipboard.setData("text/plain", link);
-			}
-
 			theContextMenu.add([theUILang.fDelete, function() {askYesNo(theUILang.FSdel, theUILang.FSdelmsg, "theWebUI.FS.del()" );}]);
 			theContextMenu.add([theUILang.FSedit, (table.selCount > 1) ? null : function() {theWebUI.FS.show(target, 'edit');}]);
 			theContextMenu.add([CMENU_SEP]);
-			theContextMenu.add([theUILang.FScopylink,(table.selCount > 1) ? null : function() {}]);
-
+			theContextMenu.add([theUILang.FScopylink,(table.selCount > 1) ? null : function() {clip(theWebUI.getTable("fsh").getValueById('_fsh_'+target, 'link'));}]);
 	   		theContextMenu.show();
-
-			if(table.selCount == 1) {
-				var copyBtn = theContextMenu.get(theUILang.FScopylink)[0];
-				new ZeroClipboard(copyBtn);
-			}
 
 			return(true);
 		}
 		return(false);
 	},
 
-
 	query: function(action, complete, err) {
-
 
 			$.ajax({
   				type: 'POST',
@@ -243,20 +226,16 @@ theWebUI.FS = {
    				dataType: "json",
 
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					log('FILE SHARE: error - STATUS:'+textStatus+' MSG: '+XMLHttpRequest.responseText);			
+					log('FILE SHARE: error - STATUS:'+textStatus+' MSG: '+XMLHttpRequest.responseText);
 				},
 
 				success: function(data, textStatus) {if($type(complete)) {complete();}
 										theWebUI.FS.tableadd(data);}
  		});
 
-
 	}
 
 }
-
-
-
 
 plugin.config = theWebUI.config;
 theWebUI.config = function(data) {
@@ -266,14 +245,12 @@ theWebUI.config = function(data) {
 		plugin.config.call(this,data);
 }
 
-
 plugin.resizeBottom = theWebUI.resizeBottom;
 theWebUI.resizeBottom = function( w, h ) {
 
 		theWebUI.FS.resize(w, h);
 		plugin.resizeBottom.call(this,w,h);
 }
-
 
 plugin.onShow = theTabs.onShow;
 theTabs.onShow = function(id) {
@@ -284,7 +261,6 @@ theTabs.onShow = function(id) {
 			theWebUI.resize();
 	} else {$('#FS_refresh').hide(); plugin.onShow.call(this,id);}
 }
-
 
 plugin.flmMenu = theWebUI.fManager.flmSelect;
 theWebUI.fManager.flmSelect = function( e, id ) {
@@ -297,24 +273,16 @@ theWebUI.fManager.flmSelect = function( e, id ) {
 				theContextMenu.add( el, [theUILang.FSshare, (!theWebUI.fManager.isDir(item) && !(theWebUI.getTable("flm").selCount > 1) && !theWebUI.FS.islimited(theWebUI.FS.maxlinks, theWebUI.getTable("fsh").rows)) ? function() {theWebUI.FS.show(item, 'add');} : null]);
 			}
 		}
-		
+
 }
-
-
 
 plugin.onLangLoaded = function() {
 
 	injectScript('plugins/fileshare/settings.js.php', function() {theWebUI.FS.refresh();});
-	injectScript('plugins/fileshare/clip/ZeroClipboard.js', function() {
-								ZeroClipboard.config( { swfPath: 'plugins/fileshare/clip/ZeroClipboard.swf', forceHandCursor: true } );
-								ZeroClipboard.on("copy", ZeroClipboard.blur);
-								new ZeroClipboard();
-							});
 
 	if(this.enabled) {
 		plugin.renameTab('FileShare', theUILang.FSshow);
 		$('#tab_lcont').append('<input type="button" id="FS_refresh" class="Button" value="'+theUILang.fRefresh+'" style="display: none;">');
-
 
 		var add = '<div class="cont fxcaret"><fieldset><legend>Options:</legend>'+
 				'<table border="0" cellspacing="0" cellpadding="0" >'+
@@ -330,7 +298,6 @@ plugin.onLangLoaded = function() {
 					'<input type="button" id="FS_addbut" class="Button" value="'+theUILang.FSadd+'" class="Button" />'+
 					'<input type="button" class="Cancel Button" value="'+theUILang.fDiagClose+'"/>'+
 				'</div>';
-				
 
 		theDialogManager.make('FS_main', theUILang.FSshow, add, false);
 
@@ -338,11 +305,9 @@ plugin.onLangLoaded = function() {
 		$('#FS_editbut').click(function() {theWebUI.FS.edit(this);});
 		$('#FS_refresh').click(function() {theWebUI.FS.refresh();});
 
-
-
 	}
-};
 
+};
 
 plugin.onRemove = function() {
 	this.removePageFromTabs('FileShare');

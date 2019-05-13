@@ -13,6 +13,9 @@ theUILang.FSshare		= 'Partager...';
 theUILang.FSlinkcreate		= 'Lien de téléchargement créé';
 theUILang.FSlinkedit		= 'Lien de téléchargement édité';
 theUILang.FScopylink		= 'Copier le lien';
+theUILang.FScopylinkmsg		= 'La fonction pour copier n\'est pas disponible sur votre navigateur.\nVous devez copier manuellement le lien ci-dessous :\n\n';
 theUILang.FSmaxdur		= 'Durée maxi autorisée est :';
 theUILang.FSnolimit		= '[Pas de limite est autorisée : 0]';
 theUILang.FSnolimitoff		= 'Durée illimitée n\'est pas autorisée';
+
+theUILang.fDiagClose		= 'Fermer';

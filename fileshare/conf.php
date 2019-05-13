@@ -2,7 +2,7 @@
 
 // duration & links limits
 // 0 = unlimited
-$limits['duration'] = 24;        // maximum duration hours
+$limits['duration'] = 168;        // maximum duration hours
 $limits['links'] = 0;   //maximum sharing links per user
 
 // extra

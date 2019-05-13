@@ -13,6 +13,9 @@ theUILang.FSshare		= 'Share...';
 theUILang.FSlinkcreate		= 'Download link created';
 theUILang.FSlinkedit		= 'Download link edited';
 theUILang.FScopylink		= 'Copy link';
+theUILang.FScopylinkmsg		= 'Copy function isn\'t working on your browser.\nYou need to copy the link below manually:\n\n';
 theUILang.FSmaxdur		= 'Maximum allowed duration is:';
 theUILang.FSnolimit		= '[No limit is allowed: 0]';
 theUILang.FSnolimitoff		= 'No limit is not allowed';
+
+theUILang.fDiagClose		= 'Close';
