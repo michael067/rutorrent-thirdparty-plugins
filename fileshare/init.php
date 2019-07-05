@@ -1,3 +1,5 @@
 <?php
 
-	$theSettings->registerPlugin("fileshare");
+	eval( getPluginConf( 'fileshare' ) );
+
+	$theSettings->registerPlugin($plugin["name"],$pInfo["perms"]);
