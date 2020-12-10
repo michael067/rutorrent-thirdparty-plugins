@@ -7,27 +7,27 @@ $fm['mkdperm'] = 755; 		// default permission to set to new created directories
 
 if(empty($pathToExternals['rar']))	// May be path already defined?
 {
-	$pathToExternals['rar'] = '';
+	$pathToExternals['rar'] = '/usr/bin/rar';
 }
 if(empty($pathToExternals['zip']))	// May be path already defined?
 {
-	$pathToExternals['zip'] = '';
+	$pathToExternals['zip'] = '/usr/bin/zip';
 }
 if(empty($pathToExternals['unzip']))	// May be path already defined?
 {
-	$pathToExternals['unzip'] = '';
+	$pathToExternals['unzip'] = '/usr/bin/unzip';
 }
 if(empty($pathToExternals['tar']))	// May be path already defined?
 {
-	$pathToExternals['tar'] = '';
+	$pathToExternals['tar'] = '/usr/bin/tar';
 }
 if(empty($pathToExternals['gzip']))	// May be path already defined?
 {
-	$pathToExternals['gzip'] = '';
+	$pathToExternals['gzip'] = '/usr/bin/gzip';
 }
 if(empty($pathToExternals['bzip2']))	// May be path already defined?
 {
-	$pathToExternals['bzip2'] = '';
+	$pathToExternals['bzip2'] = '/usr/bin/bzip2';
 }
 
 // archive mangling, see archiver man page before editing
